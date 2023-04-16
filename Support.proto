@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package support;
+
+message SupportDetail {
+	string id = 1;
+	string firstname = 2;
+	string lastname = 3;
+	string title = 4;
+	string department = 5;
+}
+
+message AddSupportEngineerRequest {
+	SupportDetail detail = 1;
+}
+
+message AddSupportEngineerResponse {
+	string support_id = 1;
+}
+
+service SupportService {
+	rpc AddSupportEngineer (AddSupportEngineerRequest) returns (AddSupportEngineerResponse) {}
+}
