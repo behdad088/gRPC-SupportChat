@@ -49,6 +49,10 @@ namespace Support {
     static readonly grpc::Marshaller<global::Support.AddSupportEngineerRequest> __Marshaller_support_AddSupportEngineerRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.AddSupportEngineerRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Support.AddSupportEngineerResponse> __Marshaller_support_AddSupportEngineerResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.AddSupportEngineerResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Support.GetAvailableSupportEngineerRequest> __Marshaller_support_GetAvailableSupportEngineerRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.GetAvailableSupportEngineerRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Support.GetAvailableSupportEngineerResponse> __Marshaller_support_GetAvailableSupportEngineerResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.GetAvailableSupportEngineerResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse> __Method_AddSupportEngineer = new grpc::Method<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse>(
@@ -57,6 +61,14 @@ namespace Support {
         "AddSupportEngineer",
         __Marshaller_support_AddSupportEngineerRequest,
         __Marshaller_support_AddSupportEngineerResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Support.GetAvailableSupportEngineerRequest, global::Support.GetAvailableSupportEngineerResponse> __Method_GetAvailableSupportEngineer = new grpc::Method<global::Support.GetAvailableSupportEngineerRequest, global::Support.GetAvailableSupportEngineerResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetAvailableSupportEngineer",
+        __Marshaller_support_GetAvailableSupportEngineerRequest,
+        __Marshaller_support_GetAvailableSupportEngineerResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -70,6 +82,12 @@ namespace Support {
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Support.AddSupportEngineerResponse> AddSupportEngineer(global::Support.AddSupportEngineerRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Support.GetAvailableSupportEngineerResponse> GetAvailableSupportEngineer(global::Support.GetAvailableSupportEngineerRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -123,6 +141,26 @@ namespace Support {
       {
         return CallInvoker.AsyncUnaryCall(__Method_AddSupportEngineer, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Support.GetAvailableSupportEngineerResponse GetAvailableSupportEngineer(global::Support.GetAvailableSupportEngineerRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAvailableSupportEngineer(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Support.GetAvailableSupportEngineerResponse GetAvailableSupportEngineer(global::Support.GetAvailableSupportEngineerRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetAvailableSupportEngineer, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Support.GetAvailableSupportEngineerResponse> GetAvailableSupportEngineerAsync(global::Support.GetAvailableSupportEngineerRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetAvailableSupportEngineerAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Support.GetAvailableSupportEngineerResponse> GetAvailableSupportEngineerAsync(global::Support.GetAvailableSupportEngineerRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetAvailableSupportEngineer, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override SupportServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -137,7 +175,8 @@ namespace Support {
     public static grpc::ServerServiceDefinition BindService(SupportServiceBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_AddSupportEngineer, serviceImpl.AddSupportEngineer).Build();
+          .AddMethod(__Method_AddSupportEngineer, serviceImpl.AddSupportEngineer)
+          .AddMethod(__Method_GetAvailableSupportEngineer, serviceImpl.GetAvailableSupportEngineer).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -148,6 +187,7 @@ namespace Support {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, SupportServiceBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_AddSupportEngineer, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse>(serviceImpl.AddSupportEngineer));
+      serviceBinder.AddMethod(__Method_GetAvailableSupportEngineer, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Support.GetAvailableSupportEngineerRequest, global::Support.GetAvailableSupportEngineerResponse>(serviceImpl.GetAvailableSupportEngineer));
     }
 
   }

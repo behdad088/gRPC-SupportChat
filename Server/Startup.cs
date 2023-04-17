@@ -10,6 +10,7 @@ namespace grpc.server
         {
             services.AddGrpc();
             services.AddSingleton<ISupportEngineerDataProvider, SupportEngineerDataProvider>();
+            services.AddSingleton<IChatDataProvider, ChatDataProvider>();
             services.AddLogging(c => c.AddConsole(opt => opt.LogToStandardErrorThreshold = LogLevel.Debug));
 
         }
@@ -26,6 +27,7 @@ namespace grpc.server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<SupportServiceImpl>();
+                endpoints.MapGrpcService<ChatServiceImpl>();
 
                 endpoints.MapGet("/",
                     async context =>

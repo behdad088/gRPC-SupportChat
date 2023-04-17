@@ -2,12 +2,19 @@ syntax = "proto3";
 
 package support;
 
+enum AvailabiltyStatus {
+	none = 0;
+	available = 1;
+	busy = 2;
+}
+
 message SupportDetail {
 	string id = 1;
 	string firstname = 2;
 	string lastname = 3;
 	string title = 4;
 	string department = 5;
+	AvailabiltyStatus status = 6;
 }
 
 message AddSupportEngineerRequest {
@@ -18,6 +25,16 @@ message AddSupportEngineerResponse {
 	string support_id = 1;
 }
 
+message GetAvailableSupportEngineerRequest {
+
+}
+
+message GetAvailableSupportEngineerResponse {
+	SupportDetail SupportDetail = 1;
+}
+
+
 service SupportService {
 	rpc AddSupportEngineer (AddSupportEngineerRequest) returns (AddSupportEngineerResponse) {}
+	rpc GetAvailableSupportEngineer (GetAvailableSupportEngineerRequest) returns (GetAvailableSupportEngineerResponse) {}
 }

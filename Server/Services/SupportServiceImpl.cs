@@ -27,5 +27,14 @@ namespace grpc.server.Services
                 SupportId = id
             });
         }
+
+        public override Task<GetAvailableSupportEngineerResponse> GetAvailableSupportEngineer(GetAvailableSupportEngineerRequest request, ServerCallContext context)
+        {
+            var result = _supportEngineerDataProvider.GetAvailableSupport();
+            return Task.FromResult(new GetAvailableSupportEngineerResponse
+            {
+                SupportDetail = result
+            });
+        }
     }
 }

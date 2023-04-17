@@ -28,4 +28,8 @@
 		<Protobuf Include="../*.proto" OutputDir="%(RelativePath)Models/" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Models\Internal\" />
+	</ItemGroup>
+
 </Project>
