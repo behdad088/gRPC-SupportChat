@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Support", "Support\Support.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proto", "proto", "{62B7001C-1F25-4E1F-B09F-30C5E5911D54}"
 	ProjectSection(SolutionItems) = preProject
+		Chat.proto = Chat.proto
 		Support.proto = Support.proto
 	EndProjectSection
 EndProject

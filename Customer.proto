@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package customer;
+
+message ChatMessage {
+	string engineer_id = 1;
+	string customer_id = 2;
+	string message = 3;
+}
+
+message ChatMessageRequest{
+	ChatMessage chatMessage = 1;
+}
+
+message ChatMessageResponse {
+	ChatMessage chatMessage = 1;
+}
+
+service CustomerService {
+	rpc SendChatMessage(stream ChatMessageRequest) returns (stream ChatMessageResponse);
+}

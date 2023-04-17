@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package chat;
+
+message ChatMessage {
+	string sender_id = 1;
+	string sender_name = 2;
+	string message = 3;
+}
+
+message ChatMessageRequest{
+	ChatMessage chatMessage = 1;
+}
+
+message ChatMessageResponse {
+	ChatMessage chatMessage = 1;
+}
+
+message ConnetChannelRequest {
+	string customer_id = 1;
+	string support_id = 2;
+}
+
+service ChatService {
+	rpc SendChatMessage(stream ChatMessageRequest) returns (stream ChatMessageResponse) {}
+	rpc ConnectToChannel(ConnetChannelRequest) returns (google.protobuf.Empty) {}
+}

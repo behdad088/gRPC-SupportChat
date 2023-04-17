@@ -5,13 +5,11 @@ namespace grpc.server.Provider
 {
     internal class SupportEngineerDataProvider : ISupportEngineerDataProvider
     {
-        private readonly ISet<string> _availableEngineerIds;
         private readonly ISet<SupportDetail> _supportEngineers;
 
         public SupportEngineerDataProvider()
         {
             _supportEngineers = new HashSet<SupportDetail>();
-            _availableEngineerIds = new HashSet<string>();
         }
 
         public string AddSupportEngineer(SupportDetail supportDetail)
@@ -19,9 +17,6 @@ namespace grpc.server.Provider
             var id = Guid.NewGuid().ToString();
             supportDetail.Id = id;
             _supportEngineers.Add(supportDetail);
-
-            AddNewEngineerToAvailableList(id);
-
             return id;
         }
 
@@ -32,9 +27,24 @@ namespace grpc.server.Provider
                 _supportEngineers.Remove(support);
         }
 
-        private void AddNewEngineerToAvailableList(string id)
+        /// <summary>
+        /// Returns a random available engineer. Using random to aviod assign task to the first 
+        /// engineers all the time to spread the task equaly among all the engineers.
+        /// </summary>
+        /// <returns></returns>
+        public SupportDetail GetAvailableSupport()
         {
-            _availableEngineerIds.Add(id);
+            var random = new Random();
+            var availableSupportEngineers = _supportEngineers.Where(x => x.Status == AvailabiltyStatus.Available).ToList();
+            int index = random.Next(availableSupportEngineers.Count);
+            var availableEngineer = availableSupportEngineers[index];
+            availableEngineer.Status = AvailabiltyStatus.Busy;
+            return availableEngineer;
+        }
+
+        public void SetEngineerStatusToAvailable(SupportDetail supportDetail)
+        {
+            supportDetail.Status = AvailabiltyStatus.Available;
         }
     }
 }

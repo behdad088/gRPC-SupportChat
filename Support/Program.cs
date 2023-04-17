@@ -1,33 +1,46 @@
-﻿using Grpc.Core;
+﻿using Chat;
+using Grpc.Core;
 
 namespace Support
 {
     internal class Program
     {
-        const string target = "localhost:50051";
         static async Task Main(string[] args)
         {
             var channel = await SetupChannel();
-            var client = new SupportService.SupportServiceClient(channel);
+            var suppportClient = new SupportService.SupportServiceClient(channel);
+            var chatClient = new ChatService.ChatServiceClient(channel);
 
             var (firstname, lastname) = GetEngineerData();
+            Console.ForegroundColor = ConsoleColor.Green;
+            var addSupportEngineerRequest = GetAddSupportEngineerRequestObject(firstname, lastname);
+            var addedSupportEngineerResponse = suppportClient.AddSupportEngineer(addSupportEngineerRequest);
 
-            var addSupportEngineerRequest = new AddSupportEngineerRequest
+            Console.WriteLine($"Support was added successfuly. Support Id is {addedSupportEngineerResponse.SupportId}");
+
+            var sendChatMessageStream = chatClient.SendChatMessage();
+
+            var chatResponse = Task.Run(async () =>
             {
-                Detail = new SupportDetail
+                while (await sendChatMessageStream.ResponseStream.MoveNext())
                 {
-                    Firstname = firstname,
-                    Lastname = lastname,
-                    Title = "Support Engineer",
-                    Department = "Support"
+                    ShowReceivedMessage(sendChatMessageStream.ResponseStream.Current.ChatMessage);
                 }
-            };
+            });
 
-            var response = client.AddSupportEngineer(addSupportEngineerRequest);
+            await SendMessage(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, string.Empty);
 
-            Console.WriteLine($"Support was added successfuly. Support Id is {response.SupportId}");
+            var message = Console.ReadLine();
+            PreviewSentMessage(message);
+            while (!string.Equals(message, "qw!", StringComparison.OrdinalIgnoreCase))
+            {
+                await SendMessage(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, message);
+                message = Console.ReadLine();
+                PreviewSentMessage(message);
+            }
+            await sendChatMessageStream.RequestStream.CompleteAsync();
+
             Console.ReadKey();
-
             channel?.ShutdownAsync()?.Wait();
         }
 
@@ -49,21 +62,67 @@ namespace Support
         private static (string firstname, string lastname) GetEngineerData()
         {
             Console.WriteLine("Please enter your first name:");
-            string firstname = Console.ReadLine();
+            string firstname = Console.ReadLine() ?? string.Empty;
             while (string.IsNullOrEmpty(firstname))
             {
                 Console.WriteLine("Please enter a valid firstname. Firstname cannot be null or empty.");
-                firstname = Console.ReadLine();
+                firstname = Console.ReadLine() ?? string.Empty;
             }
             Console.WriteLine("Please enter your last name:");
-            string lastname = Console.ReadLine();
+            string lastname = Console.ReadLine() ?? string.Empty;
             while (string.IsNullOrEmpty(lastname))
             {
                 Console.WriteLine("Please enter a valid lastname. Lastname cannot be null or empty.");
-                lastname = Console.ReadLine();
+                lastname = Console.ReadLine() ?? string.Empty;
             }
+            Console.Clear();
+            Console.Title = $"{firstname} {lastname}";
 
             return (firstname, lastname);
+        }
+
+        private static void PreviewSentMessage(string message)
+        {
+            if (Console.CursorTop == 0) return;
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            if (!string.IsNullOrEmpty(message))
+                Console.WriteLine($"You: {message}");
+        }
+
+        private static void ShowReceivedMessage(ChatMessage chatMessage)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"{chatMessage.SenderName}: {chatMessage.Message}");
+            Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        private static AddSupportEngineerRequest GetAddSupportEngineerRequestObject(string firstname, string lastname)
+        {
+            return new AddSupportEngineerRequest
+            {
+                Detail = new SupportDetail
+                {
+                    Firstname = firstname,
+                    Lastname = lastname,
+                    Title = "Support Engineer",
+                    Department = "Support",
+                    Status = AvailabiltyStatus.Available
+                }
+            };
+        }
+
+        private static async Task SendMessage(IClientStreamWriter<ChatMessageRequest> streamWriter, string senderId, string firstname, string lastname, string message)
+        {
+            await streamWriter.WriteAsync(new ChatMessageRequest
+            {
+                ChatMessage = new ChatMessage
+                {
+                    SenderId = senderId,
+                    Message = message,
+                    SenderName = $"{firstname} {lastname}"
+                }
+            });
+
         }
     }
 }

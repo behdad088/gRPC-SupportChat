@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 		<Protobuf Include="../Support.proto" OutputDir="%(RelativePath)Models/" />
+		<Protobuf Include="../Chat.proto" OutputDir="%(RelativePath)Models/" />
 	</ItemGroup>
 
 </Project>
