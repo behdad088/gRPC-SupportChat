@@ -53,6 +53,10 @@ namespace Support {
     static readonly grpc::Marshaller<global::Support.GetAvailableSupportEngineerRequest> __Marshaller_support_GetAvailableSupportEngineerRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.GetAvailableSupportEngineerRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Support.GetAvailableSupportEngineerResponse> __Marshaller_support_GetAvailableSupportEngineerResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.GetAvailableSupportEngineerResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Support.SetSupportEngineerStatusToAvailableResponse> __Marshaller_support_SetSupportEngineerStatusToAvailableResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Support.SetSupportEngineerStatusToAvailableResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse> __Method_AddSupportEngineer = new grpc::Method<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse>(
@@ -69,6 +73,14 @@ namespace Support {
         "GetAvailableSupportEngineer",
         __Marshaller_support_GetAvailableSupportEngineerRequest,
         __Marshaller_support_GetAvailableSupportEngineerResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Support.SetSupportEngineerStatusToAvailableResponse, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetSupportEngineerStatusToAvailable = new grpc::Method<global::Support.SetSupportEngineerStatusToAvailableResponse, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SetSupportEngineerStatusToAvailable",
+        __Marshaller_support_SetSupportEngineerStatusToAvailableResponse,
+        __Marshaller_google_protobuf_Empty);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -88,6 +100,12 @@ namespace Support {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Support.GetAvailableSupportEngineerResponse> GetAvailableSupportEngineer(global::Support.GetAvailableSupportEngineerRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> SetSupportEngineerStatusToAvailable(global::Support.SetSupportEngineerStatusToAvailableResponse request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -161,6 +179,26 @@ namespace Support {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetAvailableSupportEngineer, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty SetSupportEngineerStatusToAvailable(global::Support.SetSupportEngineerStatusToAvailableResponse request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SetSupportEngineerStatusToAvailable(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty SetSupportEngineerStatusToAvailable(global::Support.SetSupportEngineerStatusToAvailableResponse request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SetSupportEngineerStatusToAvailable, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> SetSupportEngineerStatusToAvailableAsync(global::Support.SetSupportEngineerStatusToAvailableResponse request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SetSupportEngineerStatusToAvailableAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> SetSupportEngineerStatusToAvailableAsync(global::Support.SetSupportEngineerStatusToAvailableResponse request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SetSupportEngineerStatusToAvailable, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override SupportServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -176,7 +214,8 @@ namespace Support {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_AddSupportEngineer, serviceImpl.AddSupportEngineer)
-          .AddMethod(__Method_GetAvailableSupportEngineer, serviceImpl.GetAvailableSupportEngineer).Build();
+          .AddMethod(__Method_GetAvailableSupportEngineer, serviceImpl.GetAvailableSupportEngineer)
+          .AddMethod(__Method_SetSupportEngineerStatusToAvailable, serviceImpl.SetSupportEngineerStatusToAvailable).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -188,6 +227,7 @@ namespace Support {
     {
       serviceBinder.AddMethod(__Method_AddSupportEngineer, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Support.AddSupportEngineerRequest, global::Support.AddSupportEngineerResponse>(serviceImpl.AddSupportEngineer));
       serviceBinder.AddMethod(__Method_GetAvailableSupportEngineer, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Support.GetAvailableSupportEngineerRequest, global::Support.GetAvailableSupportEngineerResponse>(serviceImpl.GetAvailableSupportEngineer));
+      serviceBinder.AddMethod(__Method_SetSupportEngineerStatusToAvailable, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Support.SetSupportEngineerStatusToAvailableResponse, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.SetSupportEngineerStatusToAvailable));
     }
 
   }

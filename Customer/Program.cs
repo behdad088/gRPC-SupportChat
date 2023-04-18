@@ -42,7 +42,8 @@ namespace Customer
                 PreviewSentMessage(message);
             }
             await sendChatMessageStream.RequestStream.CompleteAsync();
-
+            await chatClient.DisconnectToChannelAsync(new DisconnetChannelRequest { CustomerId = senderId, SupportId = availableEnigneer.SupportDetail.Id });
+            await supportClient.SetSupportEngineerStatusToAvailableAsync(new SetSupportEngineerStatusToAvailableResponse() { SupportId = availableEnigneer.SupportDetail.Id });
             Console.ReadKey();
 
             channel?.ShutdownAsync()?.Wait();
@@ -119,7 +120,5 @@ namespace Customer
                 }
             });
         }
-
-
     }
 }

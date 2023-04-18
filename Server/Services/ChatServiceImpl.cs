@@ -54,5 +54,13 @@ namespace grpc.server.Services
 
             return Task.FromResult(new Empty());
         }
+
+        public override Task<Empty> DisconnectToChannel(DisconnetChannelRequest request, ServerCallContext context)
+        {
+            var supportId = request.SupportId;
+            var customerId = request.CustomerId;
+            _chatDataProvider.DisconnetUserToReceiverStream(customerId, supportId);
+            return Task.FromResult(new Empty());
+        }
     }
 }

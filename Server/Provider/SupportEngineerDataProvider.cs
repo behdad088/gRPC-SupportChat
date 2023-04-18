@@ -1,4 +1,5 @@
 ﻿using grpc.server.Abstract;
+using Grpc.Core;
 using Support;
 
 namespace grpc.server.Provider
@@ -36,15 +37,20 @@ namespace grpc.server.Provider
         {
             var random = new Random();
             var availableSupportEngineers = _supportEngineers.Where(x => x.Status == AvailabiltyStatus.Available).ToList();
+            if (!availableSupportEngineers.Any())
+                throw new RpcException(new Status(StatusCode.NotFound, "No Support was found at the moment!"));
+
             int index = random.Next(availableSupportEngineers.Count);
             var availableEngineer = availableSupportEngineers[index];
             availableEngineer.Status = AvailabiltyStatus.Busy;
             return availableEngineer;
         }
 
-        public void SetEngineerStatusToAvailable(SupportDetail supportDetail)
+        public void SetEngineerStatusToAvailable(string id)
         {
-            supportDetail.Status = AvailabiltyStatus.Available;
+            var support = _supportEngineers.FirstOrDefault(support => support.Id == id);
+            if (support != null)
+                support.Status = AvailabiltyStatus.Available;
         }
     }
 }
