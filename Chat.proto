@@ -22,7 +22,13 @@ message ConnetChannelRequest {
 	string support_id = 2;
 }
 
+message DisconnetChannelRequest {
+	string customer_id = 1;
+	string support_id = 2;
+}
+
 service ChatService {
 	rpc SendChatMessage(stream ChatMessageRequest) returns (stream ChatMessageResponse) {}
 	rpc ConnectToChannel(ConnetChannelRequest) returns (google.protobuf.Empty) {}
+	rpc DisconnectToChannel (DisconnetChannelRequest) returns (google.protobuf.Empty) {}
 }

@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+import "google/protobuf/empty.proto";
 package support;
 
 enum AvailabiltyStatus {
@@ -32,9 +32,12 @@ message GetAvailableSupportEngineerRequest {
 message GetAvailableSupportEngineerResponse {
 	SupportDetail SupportDetail = 1;
 }
-
+message SetSupportEngineerStatusToAvailableResponse {
+	string support_id = 1;
+}
 
 service SupportService {
 	rpc AddSupportEngineer (AddSupportEngineerRequest) returns (AddSupportEngineerResponse) {}
 	rpc GetAvailableSupportEngineer (GetAvailableSupportEngineerRequest) returns (GetAvailableSupportEngineerResponse) {}
+	rpc SetSupportEngineerStatusToAvailable(SetSupportEngineerStatusToAvailableResponse) returns (google.protobuf.Empty) {}
 }

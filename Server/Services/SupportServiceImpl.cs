@@ -1,4 +1,5 @@
-﻿using grpc.server.Abstract;
+﻿using Google.Protobuf.WellKnownTypes;
+using grpc.server.Abstract;
 using Grpc.Core;
 using Support;
 using static Support.SupportService;
@@ -35,6 +36,14 @@ namespace grpc.server.Services
             {
                 SupportDetail = result
             });
+        }
+
+        public override Task<Empty> SetSupportEngineerStatusToAvailable(SetSupportEngineerStatusToAvailableResponse request, ServerCallContext context)
+        {
+            var supportId = request.SupportId;
+            _supportEngineerDataProvider.SetEngineerStatusToAvailable(supportId);
+
+            return Task.FromResult(new Empty());
         }
     }
 }

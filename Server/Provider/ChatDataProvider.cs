@@ -6,13 +6,11 @@ namespace grpc.server.Provider
 {
     internal class ChatDataProvider : IChatDataProvider
     {
-        private readonly ISupportEngineerDataProvider _supportEngineerDataProvider;
         private ISet<UserInfo> _userInfo;
-        private Dictionary<string, IServerStreamWriter<ChatMessageResponse>> _streamDic;
+        private readonly Dictionary<string, IServerStreamWriter<ChatMessageResponse>> _streamDic;
 
-        public ChatDataProvider(ISupportEngineerDataProvider supportEngineerDataProvider)
+        public ChatDataProvider()
         {
-            _supportEngineerDataProvider = supportEngineerDataProvider;
             _userInfo = new HashSet<UserInfo>();
             _streamDic = new Dictionary<string, IServerStreamWriter<ChatMessageResponse>>();
         }
@@ -53,7 +51,7 @@ namespace grpc.server.Provider
             }
             else
             {
-                // exception
+                throw new RpcException(new Status(StatusCode.Internal, "Could not find user."));
             }
         }
 
@@ -63,13 +61,25 @@ namespace grpc.server.Provider
             var support = _userInfo.FirstOrDefault(x => x.UserId == supportId);
 
             if (customer == null)
-                throw new RpcException(new Status(StatusCode.Internal, "Something went wrong while trying to connect to the user stream"));
+                throw new RpcException(new Status(StatusCode.Internal, $"Something went wrong while trying to connect to the customer {customerId} stream"));
 
             if (support == null)
-                throw new RpcException(new Status(StatusCode.Internal, "Something went wrong while trying to connect to the user stream"));
+                throw new RpcException(new Status(StatusCode.Internal, $"Something went wrong while trying to connect to the suppport {supportId} stream"));
 
             _streamDic.Add(support.UserId, customer.Stream);
             _streamDic.Add(customer.UserId, support.Stream);
+        }
+
+        public void DisconnetUserToReceiverStream(string customerId, string supportId)
+        {
+            var customer = _userInfo.FirstOrDefault(x => x.UserId == customerId);
+            var support = _userInfo.FirstOrDefault(x => x.UserId == supportId);
+
+            if (customer != null)
+                _streamDic.Remove(customer.UserId);
+
+            if (support != null)
+                _streamDic.Remove(support.UserId);
         }
     }
 

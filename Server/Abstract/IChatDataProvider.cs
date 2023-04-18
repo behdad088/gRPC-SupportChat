@@ -8,5 +8,6 @@ namespace grpc.server.Abstract
         void SaveUserInfo(string userId, IServerStreamWriter<ChatMessageResponse> CustomerResponseStream);
         void SendAsync(string senderId, string message, string senderName);
         void ConnetUserToReceiverStream(string customerId, string supportId);
+        void DisconnetUserToReceiverStream(string customerId, string supportId);
     }
 }

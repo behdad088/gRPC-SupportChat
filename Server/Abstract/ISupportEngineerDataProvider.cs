@@ -7,5 +7,6 @@ namespace grpc.server.Abstract
         string AddSupportEngineer(SupportDetail supportDetail);
         void DeleteSupportEngineer(string id);
         SupportDetail GetAvailableSupport();
+        void SetEngineerStatusToAvailable(string id);
     }
 }

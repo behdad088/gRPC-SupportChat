@@ -53,6 +53,8 @@ namespace Chat {
     static readonly grpc::Marshaller<global::Chat.ConnetChannelRequest> __Marshaller_chat_ConnetChannelRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Chat.ConnetChannelRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Chat.DisconnetChannelRequest> __Marshaller_chat_DisconnetChannelRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Chat.DisconnetChannelRequest.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Chat.ChatMessageRequest, global::Chat.ChatMessageResponse> __Method_SendChatMessage = new grpc::Method<global::Chat.ChatMessageRequest, global::Chat.ChatMessageResponse>(
@@ -68,6 +70,14 @@ namespace Chat {
         __ServiceName,
         "ConnectToChannel",
         __Marshaller_chat_ConnetChannelRequest,
+        __Marshaller_google_protobuf_Empty);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Chat.DisconnetChannelRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_DisconnectToChannel = new grpc::Method<global::Chat.DisconnetChannelRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "DisconnectToChannel",
+        __Marshaller_chat_DisconnetChannelRequest,
         __Marshaller_google_protobuf_Empty);
 
     /// <summary>Service descriptor</summary>
@@ -88,6 +98,12 @@ namespace Chat {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> ConnectToChannel(global::Chat.ConnetChannelRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> DisconnectToChannel(global::Chat.DisconnetChannelRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -151,6 +167,26 @@ namespace Chat {
       {
         return CallInvoker.AsyncUnaryCall(__Method_ConnectToChannel, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty DisconnectToChannel(global::Chat.DisconnetChannelRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DisconnectToChannel(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty DisconnectToChannel(global::Chat.DisconnetChannelRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_DisconnectToChannel, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> DisconnectToChannelAsync(global::Chat.DisconnetChannelRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DisconnectToChannelAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> DisconnectToChannelAsync(global::Chat.DisconnetChannelRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_DisconnectToChannel, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override ChatServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -166,7 +202,8 @@ namespace Chat {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_SendChatMessage, serviceImpl.SendChatMessage)
-          .AddMethod(__Method_ConnectToChannel, serviceImpl.ConnectToChannel).Build();
+          .AddMethod(__Method_ConnectToChannel, serviceImpl.ConnectToChannel)
+          .AddMethod(__Method_DisconnectToChannel, serviceImpl.DisconnectToChannel).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -178,6 +215,7 @@ namespace Chat {
     {
       serviceBinder.AddMethod(__Method_SendChatMessage, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::Chat.ChatMessageRequest, global::Chat.ChatMessageResponse>(serviceImpl.SendChatMessage));
       serviceBinder.AddMethod(__Method_ConnectToChannel, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Chat.ConnetChannelRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.ConnectToChannel));
+      serviceBinder.AddMethod(__Method_DisconnectToChannel, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Chat.DisconnetChannelRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.DisconnectToChannel));
     }
 
   }
