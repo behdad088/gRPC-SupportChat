@@ -8,7 +8,7 @@ namespace Customer
     {
         static async Task Main(string[] args)
         {
-            var channel = await SetupChannel();
+            var channel = await SetupChannelAsync();
             var supportClient = new SupportService.SupportServiceClient(channel);
             var chatClient = new ChatService.ChatServiceClient(channel);
 
@@ -30,14 +30,14 @@ namespace Customer
                 }
             });
 
-            await SendMessage(sendChatMessageStream.RequestStream, senderId, firstname, lastname, string.Empty);
-            await ConnectCustomerToSupport(chatClient, senderId, availableEnigneer.SupportDetail.Id);
+            await SendMessageAsync(sendChatMessageStream.RequestStream, senderId, firstname, lastname, string.Empty);
+            await ConnectCustomerToSupportAsync(chatClient, senderId, availableEnigneer.SupportDetail.Id);
 
             var message = Console.ReadLine();
             PreviewSentMessage(message);
             while (!string.Equals(message, "qw!", StringComparison.OrdinalIgnoreCase))
             {
-                await SendMessage(sendChatMessageStream.RequestStream, senderId, firstname, lastname, message);
+                await SendMessageAsync(sendChatMessageStream.RequestStream, senderId, firstname, lastname, message);
                 message = Console.ReadLine();
                 PreviewSentMessage(message);
             }
@@ -49,7 +49,7 @@ namespace Customer
             channel?.ShutdownAsync()?.Wait();
         }
 
-        private static async Task ConnectCustomerToSupport(ChatService.ChatServiceClient chatClient, string customerId, string supportId)
+        private static async Task ConnectCustomerToSupportAsync(ChatService.ChatServiceClient chatClient, string customerId, string supportId)
         {
             await chatClient.ConnectToChannelAsync(new ConnetChannelRequest
             {
@@ -58,7 +58,7 @@ namespace Customer
             });
         }
 
-        private static async Task<Channel?> SetupChannel()
+        private static async Task<Channel?> SetupChannelAsync()
         {
             var channel = new Channel("localhost:5001", ChannelCredentials.Insecure);
 
@@ -108,7 +108,7 @@ namespace Customer
                 Console.WriteLine($"You: {message}");
         }
 
-        private static async Task SendMessage(IClientStreamWriter<ChatMessageRequest> streamWriter, string senderId, string firstname, string lastname, string message)
+        private static async Task SendMessageAsync(IClientStreamWriter<ChatMessageRequest> streamWriter, string senderId, string firstname, string lastname, string message)
         {
             await streamWriter.WriteAsync(new ChatMessageRequest
             {

@@ -7,7 +7,7 @@ namespace Support
     {
         static async Task Main(string[] args)
         {
-            var channel = await SetupChannel();
+            var channel = await SetupChannelAsync();
             var suppportClient = new SupportService.SupportServiceClient(channel);
             var chatClient = new ChatService.ChatServiceClient(channel);
 
@@ -28,13 +28,13 @@ namespace Support
                 }
             });
 
-            await SendMessage(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, string.Empty);
+            await SendMessageAsync(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, string.Empty);
 
             var message = Console.ReadLine();
             PreviewSentMessage(message);
             while (!string.Equals(message, "qw!", StringComparison.OrdinalIgnoreCase))
             {
-                await SendMessage(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, message);
+                await SendMessageAsync(sendChatMessageStream.RequestStream, addedSupportEngineerResponse.SupportId, firstname, lastname, message);
                 message = Console.ReadLine();
                 PreviewSentMessage(message);
             }
@@ -44,7 +44,7 @@ namespace Support
             channel?.ShutdownAsync()?.Wait();
         }
 
-        private static async Task<Channel?> SetupChannel()
+        private static async Task<Channel?> SetupChannelAsync()
         {
             var channel = new Channel("localhost:5001", ChannelCredentials.Insecure);
 
@@ -111,7 +111,7 @@ namespace Support
             };
         }
 
-        private static async Task SendMessage(IClientStreamWriter<ChatMessageRequest> streamWriter, string senderId, string firstname, string lastname, string message)
+        private static async Task SendMessageAsync(IClientStreamWriter<ChatMessageRequest> streamWriter, string senderId, string firstname, string lastname, string message)
         {
             await streamWriter.WriteAsync(new ChatMessageRequest
             {
